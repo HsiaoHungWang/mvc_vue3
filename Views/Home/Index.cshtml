@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center" id="app">
+    <h1 class="display-4">{{message}}</h1>  
+   <AbcComponent></AbcComponent> 
+   
+    <helloworld></helloworld>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+@section Scripts {
+    <script type="importmap">
+        {
+          "imports": {
+            "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+          }
+        }
+    </script>
+    <script type="module">
+        import { createApp, ref } from 'vue';
+        import MyComponent from '@Url.Content("~/vue/my-component.js")';     ;
+
+        const app = createApp({
+            setup() {
+                const message = ref('Hello vue!')
+                return {
+                    message
+                }
+            }
+        });
+
+        //元件獨立成一個*.js
+        //app.component('元件名稱', 匯入的元件);
+       app.component('abccomponent', MyComponent);
+
+       //元件直接建立在View中
+        app.component('helloworld', {
+            setup() {
+                const message = ref("World")
+                return { message }
+            },
+            template:`<h2>Hello {{message}}!!</h2>`
+        })
+        app.mount('#app');
+    </script>
+    }
+@section Styles{
+    <style>
+
+    </style>
+}
